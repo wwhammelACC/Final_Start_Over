@@ -1,0 +1,10 @@
+#ignore everything
+*
+*/
+
+#unignore .cpp and .h, this file, README
+!*.cpp
+!*.h
+!*.md
+!.gitignore
+
