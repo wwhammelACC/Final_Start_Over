@@ -40,9 +40,10 @@ public:
     int getEdgeCount();
     int getEdgeWeight();
     string getVertex(int, int);
+    bool getHeadID(int, Data*);
 
     bool addVertex(int, string*);
-    bool addEdge(int, int, string*, int);
+    bool addEdge(int, string*, int, string*, int);
     bool removeEdge(int, int);
     bool removeVertex(int);
 
@@ -53,17 +54,18 @@ public:
     bool edgeExists();
 
 
-
 // private methods
 private:
     VertexNode *head;
-//    vector<VertexNode*> vertexList;
-    vector<VertexNode*> edgeList;
+    //vector<VertexNode*> vertexList;
+    //vector<VertexNode*> edgeList;
     int countEdge;
     int countVertex;
-    vector<LinkedList*> graphList;
-    LinkedList *newLinkedList[GRAPHSIZE];
-    vector<VertexNode*> vertexList;
+
+    vector<LinkedList*> graphList; // just this
+
+//    LinkedList *newLinkedList[GRAPHSIZE];
+//    vector<VertexNode*> vertexList;
 
     //Save for later
 //    vector<int> adj[];

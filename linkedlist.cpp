@@ -32,7 +32,35 @@ LinkedList::~LinkedList() {
  * ****************************************
  */
 
-bool LinkedList::addNode(int id, string *info, int weightID){
+bool LinkedList::addNode(int id, string *info){
+    bool inserted = false;
+    if (id >= 0 && *info != "/0"){
+        // empty list here
+        if(head == NULL) {
+            Node *newNode = new Node;
+            newNode->data.id = id;
+            newNode->data.data = *info;
+            newNode->next = nullptr;
+            head = newNode;
+            tails = head; // essentially renaming headPointers
+            inserted = true;
+        }else{
+            // current next will be new node
+            if(!exists(id)){
+                Node *newNode = new Node;
+                newNode->data.id = id;
+                newNode->data.data = *info;
+                tails->next = newNode;
+                newNode->next = nullptr;
+                tails = newNode;
+                inserted = true;
+            }
+        }
+    }
+    return inserted;
+}
+
+bool LinkedList::addNode2(int id, string *info, int weightID){
     bool inserted = false;
     if (id >= 0 && *info != "/0"){
         // empty list here
@@ -198,6 +226,12 @@ bool LinkedList::deleteNode(int id){
 //    }
 //    return flag;
 //}
+
+int LinkedList::getHeadId() {
+    Node *current = head;
+    return current->data.id;
+
+}
 
 bool LinkedList::getNode(int id, Data *info) {
         bool flag = false;

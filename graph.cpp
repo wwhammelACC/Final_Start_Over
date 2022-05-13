@@ -19,20 +19,20 @@ for a data structure of that type.
 Graph::Graph() {
     countVertex = 0;
     countEdge = 0;
-    vertexList.assign(0, NULL);
-    for(int i = 0; i < GRAPHSIZE; i++){
-        LinkedList *newLinkedList = new LinkedList;
-        graphList.push_back(newLinkedList);
-    }
+//    vertexList.assign(0, NULL);
+//    for(int i = 0; i < GRAPHSIZE; i++){
+//        LinkedList *newLinkedList = new LinkedList;
+//        graphList.push_back(newLinkedList);
+//    }
 }
 
 //destructor
 Graph::~Graph() {
-    for (int i = 0; i < GRAPHSIZE; i++) {
-        if (graphList[i]) {
-            delete graphList[i];
-        }
-    }
+//    for (int i = 0; i < GRAPHSIZE; i++) {
+//        if (graphList[i]) {
+//            delete graphList[i];
+//        }
+//    }
 }
 
 /*
@@ -46,29 +46,91 @@ bool Graph::addVertex(int id, string *info){
     bool flag = false;
     //cout << "addVertex test line " << endl;
     if (id >= 0 && *info != "/0") {
-        VertexNode *newVertex = new VertexNode;
-        newVertex->data.id = id;
-        newVertex->data.data = *info;
-        vertexList.push_back(newVertex);
+        LinkedList *newLinkedList = new LinkedList;
+        newLinkedList->addNode(id, info);
+        graphList.push_back(newLinkedList);
         countVertex++;
         flag = true;
     }
     return flag;
 }
 
-bool Graph::addEdge(int listID, int indexID, string *info, int weightID){
-    bool flag = false;
-//    cout << "test line comparing vertex position and int id " << endl;
-//    cout << vertexList[5]->data.id << vertexList[5]->data.data << endl;
-    if (indexID >= 0 && *info != "/0") {  // input validation
-//        if (graphList[listID]->addNode(id, info)) {
-        if (graphList[listID]->addNode(vertexList[indexID]->data.id, &vertexList[indexID]->data.data, weightID)) {
-            flag = true;
-            countEdge++;
+bool Graph::addEdge(int id1, string *info1, int id2, string *info2, int weight) {
+    bool flag1, flag2, final;
+//    if (id1 != id2 && weight >= 0 && *info1 != "/0" && *info2 != "/0") {
+//        for (int i = 0; i < graphList.size(); i++) {
+//            graphList[i]->addNode2(id2, info2, weight);
+//            graphList[i]->addNode2(id1, info1, weight);
+//            flag1 = true;
+//            flag2 = true;
+//            countEdge++;
+//        }
+//    }
+
+    if (id1 != id2 && weight >= 0) {
+        for (int i = 0; i < graphList.size(); i++) {
+            if (graphList[i]->getHeadId() == id1) {
+                graphList[i]->addNode2(id2, info2, weight);
+                flag1 = true;
+                countEdge++;
+            } else if (graphList[i]->getHeadId() == id2) {
+                graphList[i]->addNode2(id1, info1, weight);
+                flag2 = true;
+                countEdge++;
+            }
         }
     }
-    return flag;
+    if (flag1 == flag2) {
+        final = true;
+    }
+
+    return final;
 }
+
+//bool Graph::getHeadID(int id, Data *info) {
+//    bool flag = false;
+//    if (head != NULL) {
+//        Node *current = head;
+//        while (id != current->data.id && current->next != NULL) {
+//            current = current->next;
+//        }
+//        if (id == current->data.id) {
+//            info->data = current->data.data; // data is the string
+//            info->id = current->data.id;     // this is the int id
+//            flag = true;
+//        }
+//        else {
+//            info->data = "";
+//            info->id = -1;
+//            flag = false;
+//        }
+//    }
+//    return flag;
+//}
+
+//
+//bool Graph::addEdge(int id1, int id2){
+//    if id1 != id2 && weigth >0
+//    for(int i = 0; i < graphList.size(); i++){
+//        if(vertexList[i]->getHeadId() == id1)
+//            vertexLIst[i]->addNde(id2);
+//        else if()
+//    }
+//}
+
+//bool Graph::addEdge(int listID, int indexID, string *info, int weightID){
+//    bool flag = false;
+//    cout << "test line comparing vertex position and int id " << endl;
+//    cout << vertexList[5]->data.id << vertexList[5]->data.data << endl;
+//    if (indexID >= 0 && *info != "/0") {  // input validation
+//        if (graphList[listID]->addNode(id, info)) {
+//        if (graphList[listID]->addNode(vertexList[indexID]->data.id, &vertexList[indexID]->data.data, weightID)) {
+//            flag = true;
+//            countEdge++;
+//        }
+//    }
+//    return flag;
+//}
 
 bool Graph::removeEdge(int listID, int indexID){
     bool removed = false;
@@ -83,19 +145,22 @@ bool Graph::removeEdge(int listID, int indexID){
 
 bool Graph::removeVertex(int indexID){
     bool flag = false;
-//    cout << "initial test line removeVertex " << endl;
+    cout << "initial test line removeVertex " << endl;
     if (indexID >= 0){
-        vertexList.erase(vertexList.begin());
+        graphList.erase(graphList.begin());
         flag = true;
         countVertex -=1;
     }
     return flag;
 }
 
-
-void Graph::printGraph(int listID){
+void Graph::printGraph(int listIndex){
     //cout << "initial print graph test line " << endl;
-    graphList[listID]->printList();
+    if(graphList.size() > listIndex){
+        graphList[listIndex]->printList();
+    }else{
+        cout << "failed to print " << endl;
+    }
 
 //    for (int i = 0; i < GRAPHSIZE; i++) {
 //        cout << "adjacency list ";

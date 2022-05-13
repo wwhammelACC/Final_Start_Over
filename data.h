@@ -13,7 +13,6 @@ using std::string;
 using std::pair;
 using std::vector;
 
-
 struct Data {
     int id;
     string data;

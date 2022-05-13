@@ -38,16 +38,6 @@ int main() {
     string vertexC = "C";
     string vertexD = "D";
     string vertexE = "E";
-    int weightAB = 4;
-    int weightAD = 8;
-    int weightBA = 4;
-    int weightBC = 3;
-    int weightBD = 5;
-    int weightCB = 3; // same as BC?
-    int weightCD = 2;
-    int weightDA = 8; // same as AD?
-    int weightDB = 5; // same as DB?
-    int weightDE = 1;
 
     //##########################################
     //INITIAL TESTING AND SET UP
@@ -58,6 +48,9 @@ int main() {
     Graph* graph = new Graph;
     cout << "done" << endl;
     cout << endl;
+
+//    cout << graph->addVertex(2, &vertexA) << endl;
+//    cout << endl;
 
     // show it is empty by calling counts and print
     cout << "testing initial print for each graph list " << endl;
@@ -88,50 +81,40 @@ int main() {
         }
     }
 
-
-//    graph->addVertex(0, &vertexA); //A note index is 0
-//    graph->addVertex(1, &vertexB); //B note index is 1
-//    graph->addVertex(2, &vertexC); //C note index is 2
-//    graph->addVertex(3, &vertexD); //D note index is 3
-//    graph->addVertex(4, &vertexE); //E note index is 4
-
     // INITIAL CONNECTIONS OF VERTICES AND WEIGHTS
     //adding connection A to B and A to D
     //to graphList[0]
-    graph->addEdge(0, 0, &vertexA, 0); //A
-    graph->addEdge(0, 1, &vertexB, 2); //B
-    graph->addEdge(0, 3, &vertexD, 8); //D
+    graph->addEdge(0, &vertexA, 1, &vertexB, 4); //A to B
+    graph->addEdge(0, &vertexA, 3, &vertexD, 8); //A to D
     cout << "There are " << graph->getVertexCount() << " Vertex entries in vertexList " << endl;
     cout << "There are " << graph->getEdgeCount() << " Edge connection entries in graphList " << endl;
     cout << endl;
-    //adding connection B to A, B to C
-    //and B to D to graphList[1]
-    graph->addEdge(1, 1, &vertexB, 0); //B
-    graph->addEdge(1, 0, &vertexA, 0); //A
-    graph->addEdge(1, 2, &vertexC, 3); //C
-    graph->addEdge(1, 3, &vertexD, 5); //D
+//    //adding connection B to A, B to C
+//    //and B to D to graphList[1]
+    graph->addEdge(1, &vertexB, 0, &vertexA, 4); //B to A
+    graph->addEdge(1, &vertexB, 2, &vertexC, 3); //B to C
+    graph->addEdge(1, &vertexB, 3, &vertexD, 5); //B to D
     cout << "There are " << graph->getVertexCount() << " Vertex entries in vertexList " << endl;
     cout << "There are " << graph->getEdgeCount() << " Edge connection entries in graphList " << endl;
     cout << endl;
-    //adding connection C to B, C to D
-    //to graphList[2]
-    graph->addEdge(2, 2, &vertexC, 0); //C
-    graph->addEdge(2, 1, &vertexB, 3); //B
-    graph->addEdge(2, 3, &vertexD, 2); //D
+//    //adding connection C to B, C to D
+//    //to graphList[2]
+    graph->addEdge(2, &vertexC, 1, &vertexB, 3); //C to B
+    graph->addEdge(2, &vertexC, 3, &vertexD, 2); //C to D
     cout << "There are " << graph->getVertexCount() << " Vertex entries in vertexList " << endl;
     cout << "There are " << graph->getEdgeCount() << " Edge connection entries in graphList " << endl;
     cout << endl;
-    //adding connection D to A, D to B
-    //and D to E, to graphList[3]
-    graph->addEdge(3, 3, &vertexD, 0); //D
-    graph->addEdge(3, 0, &vertexA, 8); //A
-    graph->addEdge(3, 1, &vertexB, 5); //B
-    graph->addEdge(3, 4, &vertexB, 1); //E
+//    //adding connection D to A, D to B
+//    //and D to E, to graphList[3]
+    graph->addEdge(3, &vertexD, 0, &vertexA, 8); //D to A
+    graph->addEdge(3, &vertexD, 1, &vertexB, 5); //D to B
+    graph->addEdge(3, &vertexD, 2, &vertexC, 5); //D to C
+    graph->addEdge(3, &vertexD, 4, &vertexE, 1); //D to E
     cout << "There are " << graph->getVertexCount() << " Vertex entries in vertexList " << endl;
     cout << "There are " << graph->getEdgeCount() << " Edge connection entries in graphList " << endl;
     cout << endl;
 
-    // INITIAL GETVERTEX TESTING
+     //INITIAL GETVERTEX TESTING
     cout << "Initial testing getVertex " << endl;
     for (int i = 0; i < GRAPHSIZE; i++){
         for(int j = 0; j < GRAPHSIZE; j++){
@@ -154,16 +137,7 @@ int main() {
     cout << "There are " << graph->getEdgeCount() << " Edge connection entries in graphList " << endl;
     cout << endl;
 
-//    cout << "printing graph list 0 in vector " << endl;
-//    graph->printGraph(0);
-//    cout << "printing graph list 1 in vector " << endl;
-//    graph->printGraph(1);
-//    cout << "printing graph list 2 in vector " << endl;
-//    graph->printGraph(2);
-//    cout << "printing graph list 3 in vector " << endl;
-//    graph->printGraph(3);
-
-    // INITIAL REMOVE TESTING
+//    INITIAL REMOVE TESTING
     cout << "testing initial remove " << endl;
     cout << "printing graph list 0 in vector " << endl;
     graph->printGraph(0);
@@ -212,54 +186,40 @@ int main() {
     } else {
         cout << "Failed, index: " << ids[0] << " was not found" << endl;
     }
-
-    //ADDING ADDITIONAL VERTEX PAST SET SIZE
-    cout << "Initial testing of adding additional vertex to vector " << endl;
-    string vertexF = "F";
-    if (graph->addVertex(5, &vertexF)){ //F note index is 5
-        cout << "success. entry inserted." << endl;
-        cout << "There are " << graph->getVertexCount() << " Vertex entries in vertexList " << endl;
-        cout << endl;
-    }else{
-        cout << endl;
-        cout << "failed to insert entry: " << 5 << endl;
-        cout << endl;
-    }
-     //ADDING ADDITIONAL EDGE CONNECTION
-    cout << "Initial testing of adding additional Edge connection to vector " << endl;
-    if (graph->addEdge(4, 5, &vertexF, 5)){
-        cout << "success. entry inserted." << endl;
-        cout << "There are " << graph->getEdgeCount() << " Edge connection entries in graphList " << endl;
-        cout << endl;
-    }else{
-        cout << endl;
-        cout << "failed to insert entry: " << 5 << endl;
-        cout << endl;
-    }
-//    string vertexG = "G";
-//    graph->addVertex(6, &vertexG);
-//    graph->addEdge(5, 6, &vertexG, 11);
-
-     //Print after additional vertex and edge connection
-    cout << "Testing print for each graph list after additional vertex and edge data added " << endl;
-    for (int i = 0; i < GRAPHSIZE; i++){
-        graph->printGraph(i);
-    }
+    cout << "Displaying how many vertices are left after removeVertex " << endl;
+    cout << "There are " << graph->getVertexCount() << " Vertex entries in vertexList " << endl;
     cout << endl;
 
-//    cout << "printing graph list 1 in vector " << endl;
-//    graph->printGraph(1);
-//    cout << "Removing C from graphList 1" << endl;
-//    graph->removeEdge(1, 2); // graphlist 1, removing index 2
-//    cout << "Checking if C was removed from graphList 1" << endl;
-//    graph->printGraph(1); //checking graphlist 1 after removing index 2
-//
-//    cout << "printing graph list 2 in vector " << endl;
-//    graph->printGraph(2);
-//    cout << "Removing D from graphList 2" << endl;
-//    graph->removeEdge(2, 3); // graphlist 2, removing index 3
-//    cout << "Checking if D was removed from graphList 2" << endl;
-//    graph->printGraph(2); //checking list 2 after removing index 3
+//    ADDING ADDITIONAL VERTEX
+//    cout << "Initial testing of adding additional vertex to vector " << endl;
+//    string vertexI = "I";
+//    if (graph->addVertex(9, &vertexI)){ //F note index is 5
+//        cout << "success. entry inserted." << endl;
+//        cout << "There are " << graph->getVertexCount() << " Vertex entries in vertexList " << endl;
+//        cout << endl;
+//    }else{
+//        cout << endl;
+//        cout << "failed to insert entry: " << 5 << endl;
+//        cout << endl;
+//    }
+//     ADDING ADDITIONAL EDGE CONNECTION
+//    cout << "Initial testing of adding additional Edge connection to vector " << endl;
+//    if (graph->addEdge(9, &vertexI, 4, &vertexE, 5)){
+//        cout << "success. entry inserted." << endl;
+//        cout << "There are " << graph->getEdgeCount() << " Edge connection entries in graphList " << endl;
+//        cout << endl;
+//    }else{
+//        cout << endl;
+//        cout << "failed to insert entry: " << 5 << endl;
+//        cout << endl;
+//    }
+//    Print after additional vertex and edge connection
+//    cout << "Testing print for each graph list after additional vertex and edge data added " << endl;
+//    for (int i = 0; i < GRAPHSIZE; i++){
+//        graph->printGraph(i);
+//    }
+//    cout << endl;
+
 
  //Delete all, to start more in depth testing....
     cout << "clearing graph lists " << endl;
@@ -268,9 +228,9 @@ int main() {
         for (int j = 0; j < GRAPHSIZE; j++) {
             ids[j] = j;
             if (graph->removeEdge(ids[i], ids[j])) {
-                cout << "Success: " << ids[i] << ids[j] << " removed" << endl;
+                cout << "Success: " << ids[i] << ":" << ids[j] << " removed" << endl;
             } else {
-                cout << "Failed: " << ids[i] << ids[j] << " was not found" << endl;
+                cout << "Failed: " << ids[i] << ":" << ids[j] << " was not found" << endl;
             }
         }
     }
@@ -293,6 +253,7 @@ int main() {
 
     return 0;
 }
+
 
 //    int V = 5;
 //    vector<int> adj[V];
@@ -361,3 +322,59 @@ int main() {
 //        }
 //    }
 //}
+//    graph->addVertex(0, &vertexA); //A note index is 0
+//    graph->addVertex(1, &vertexB); //B note index is 1
+//    graph->addVertex(2, &vertexC); //C note index is 2
+//    graph->addVertex(3, &vertexD); //D note index is 3
+//    graph->addVertex(4, &vertexE); //E note index is 4
+//    //adding connection C to B, C to D
+//    //to graphList[2]
+//    graph->addEdge(2, 2, &vertexC, 0); //C
+//    graph->addEdge(2, 1, &vertexB, 3); //B
+//    graph->addEdge(2, 3, &vertexD, 2); //D
+//    cout << "There are " << graph->getVertexCount() << " Vertex entries in vertexList " << endl;
+//    cout << "There are " << graph->getEdgeCount() << " Edge connection entries in graphList " << endl;
+//    cout << endl;
+//    //adding connection D to A, D to B
+//    //and D to E, to graphList[3]
+//    graph->addEdge(3, 3, &vertexD, 0); //D
+//    graph->addEdge(3, 0, &vertexA, 8); //A
+//    graph->addEdge(3, 1, &vertexB, 5); //B
+//    graph->addEdge(3, 4, &vertexB, 1); //E
+//    cout << "There are " << graph->getVertexCount() << " Vertex entries in vertexList " << endl;
+//    cout << "There are " << graph->getEdgeCount() << " Edge connection entries in graphList " << endl;
+//    cout << endl;
+
+//    cout << "printing graph list 0 in vector " << endl;
+//    graph->printGraph(0);
+//    cout << "printing graph list 1 in vector " << endl;
+//    graph->printGraph(1);
+//    cout << "printing graph list 2 in vector " << endl;
+//    graph->printGraph(2);
+//    cout << "printing graph list 3 in vector " << endl;
+//    graph->printGraph(3);
+//
+//int weightAB = 4;
+//int weightAD = 8;
+//int weightBA = 4;
+//int weightBC = 3;
+//int weightBD = 5;
+//int weightCB = 3; // same as BC?
+//int weightCD = 2;
+//int weightDA = 8; // same as AD?
+//int weightDB = 5; // same as DB?
+//int weightDC = 2;
+//int weightDE = 1;
+//    cout << "printing graph list 1 in vector " << endl;
+//    graph->printGraph(1);
+//    cout << "Removing C from graphList 1" << endl;
+//    graph->removeEdge(1, 2); // graphlist 1, removing index 2
+//    cout << "Checking if C was removed from graphList 1" << endl;
+//    graph->printGraph(1); //checking graphlist 1 after removing index 2
+//
+//    cout << "printing graph list 2 in vector " << endl;
+//    graph->printGraph(2);
+//    cout << "Removing D from graphList 2" << endl;
+//    graph->removeEdge(2, 3); // graphlist 2, removing index 3
+//    cout << "Checking if D was removed from graphList 2" << endl;
+//    graph->printGraph(2); //checking list 2 after removing index 3
