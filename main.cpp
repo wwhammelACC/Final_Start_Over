@@ -53,7 +53,7 @@ int main() {
 //    cout << endl;
 
     // show it is empty by calling counts and print
-    cout << "testing initial print for each graph list " << endl;
+    cout << "testing initial printing of vertices " << endl;
     for (int i = 0; i < GRAPHSIZE; i++){
         graph->printGraph(i);
     }

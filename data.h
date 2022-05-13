@@ -13,22 +13,28 @@ using std::string;
 using std::pair;
 using std::vector;
 
+struct edgeData{
+    int id;
+    string data;
+    int weight;
+};
+
 struct Data {
     int id;
     string data;
     int weight;
-    int startVert, endVert;
 };
 
 struct VertexNode {
     Data data;
-    vector<pair<int,int>> newEdges;
     VertexNode *next;
     VertexNode *prev;
 };
 
 struct EdgeNode {
-    int id;
+    edgeData data;
+    EdgeNode *next;
+    EdgeNode *prev;
 };
 
 struct Node {

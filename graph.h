@@ -48,6 +48,8 @@ public:
     bool removeVertex(int);
 
     void printGraph(int);
+    void printGraph2(int);
+
     void depthFirstTraversal();
     void breadthFirstTraversal(int);
 

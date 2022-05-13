@@ -254,6 +254,49 @@ bool LinkedList::getNode(int id, Data *info) {
     return flag;
 }
 
+void LinkedList::printList2(bool direction) {
+    //bool flag = true;
+    Node *current = head;
+    if (direction == false) {    //traverse forward
+        int i = 1;
+        if (current == NULL) {
+            cout << "Empty " << endl;
+        } else {
+            while (current != NULL) {
+                cout << current->data.data << current->data.id << ":";
+                current = current->next; // go to the next node
+                i++;
+            }
+            cout << "\b\b  ";
+            cout << endl;
+        }
+    } else {
+        current = head; // start a "tracking" pointer by pointing it head
+        int i = 1;
+        bool tail = false;
+        while (current && !tail) { // find the tail
+            if (current->next) {
+                current = current->next;
+            } else {
+                tail = true; // found the tail
+            }
+        }
+        // now traverse it backward
+        if (current == NULL) {
+            cout << "Empty " << endl;
+        }else{
+            while (current) {
+                cout << current->data.data << current->data.id << ":";
+                current = current->prev;
+                i++;
+            }
+            cout << "\b\b  ";
+            cout << endl;
+        }
+    }
+    cout << endl;
+}
+
 void LinkedList::printList(bool direction) {
     //bool flag = true;
     Node *current = head;

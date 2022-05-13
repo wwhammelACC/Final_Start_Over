@@ -57,16 +57,6 @@ bool Graph::addVertex(int id, string *info){
 
 bool Graph::addEdge(int id1, string *info1, int id2, string *info2, int weight) {
     bool flag1, flag2, final;
-//    if (id1 != id2 && weight >= 0 && *info1 != "/0" && *info2 != "/0") {
-//        for (int i = 0; i < graphList.size(); i++) {
-//            graphList[i]->addNode2(id2, info2, weight);
-//            graphList[i]->addNode2(id1, info1, weight);
-//            flag1 = true;
-//            flag2 = true;
-//            countEdge++;
-//        }
-//    }
-
     if (id1 != id2 && weight >= 0) {
         for (int i = 0; i < graphList.size(); i++) {
             if (graphList[i]->getHeadId() == id1) {
@@ -154,12 +144,26 @@ bool Graph::removeVertex(int indexID){
     return flag;
 }
 
+void Graph::printGraph2(int listVertices){
+    //cout << "initial print graph test line " << endl;
+    if(graphList.size() > listVertices){
+        graphList[listVertices]->printList2();
+    }else{
+        cout << "failed to print " << endl;
+    }
+
+//    for (int i = 0; i < GRAPHSIZE; i++) {
+//        cout << "adjacency list ";
+//        graphList[listID]->printList();
+//    }
+}
+
 void Graph::printGraph(int listIndex){
     //cout << "initial print graph test line " << endl;
     if(graphList.size() > listIndex){
         graphList[listIndex]->printList();
     }else{
-        cout << "failed to print " << endl;
+        cout << "No entry found " << endl;
     }
 
 //    for (int i = 0; i < GRAPHSIZE; i++) {

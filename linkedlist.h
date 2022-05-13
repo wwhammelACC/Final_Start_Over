@@ -31,6 +31,7 @@ public:
     bool deleteNode(int); // accepts an id and deletes the node
     bool getNode(int, Data*); // retrieves the data from a node from a given id
     void printList(bool = false); // prints forward (default) or backward
+    void printList2(bool = false); // prints vertices
     int getCount(); // reports the count (dynamically)
     bool clearList(); // deallocates all nodes and sets head to NULL
     bool exists(int); // tests for the existence of a node based on a given id
