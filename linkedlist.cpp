@@ -1,10 +1,9 @@
 /*********************
 Name: William Hammel
-Coding 06: Hash Tables
-Purpose:  In this assignment you will create a
-Hash Table class/object (as discussed in class)
-with our standard struct (a struct with an integer id
-and a string for ‘data’).
+Final Project
+Purpose: Description: Create a working bi-directional
+weighted graph class with all the standard methods
+for a data structure of that type.
 **********************/
 
 #include "linkedlist.h"
@@ -18,8 +17,8 @@ and a string for ‘data’).
 
 //constructor
 LinkedList::LinkedList() {
-
     head = NULL;
+    tails = NULL;
 }
 
 //desctructor
@@ -33,70 +32,172 @@ LinkedList::~LinkedList() {
  * ****************************************
  */
 
-//Trying Different addNode Version
-bool LinkedList::addNode(int id, string *info) {
-    bool flag = false;
-    if (id > 0 && *info != "/0") {
-        Node **nodeHold;
-        cout << endl;
-        if (head == NULL || id < head->data.id) {
-            addHead(id, info, head, *nodeHold);
-            flag = true;
+bool LinkedList::addNode(int id, string *info, int weightID){
+    bool inserted = false;
+    if (id >= 0 && *info != "/0"){
+        // empty list here
+        if(head == NULL) {
+            Node *newNode = new Node;
+            newNode->data.id = id;
+            newNode->data.data = *info;
+            newNode->data.weight = weightID;
+            newNode->next = nullptr;
+            head = newNode;
+            tails = head; // essentially renaming headPointers
+            inserted = true;
         }else{
-            cout << endl;
-            Node *current = head;
-            while (id > current->data.id && current->next != NULL) {
-                current = current->next;
-            }
-            if (id == current->data.id) {
-                flag = false;
-            } else if (id > current->data.id && current->next == NULL) {
-                addTail(id, info, current, *nodeHold);
-                flag = true;
-            } else {
-                addMiddle(id, info, current, *nodeHold);
-                flag = true;
+            // current next will be new node
+            if(!exists(id)){
+                Node *newNode = new Node;
+                newNode->data.id = id;
+                newNode->data.data = *info;
+                newNode->data.weight = weightID;
+                tails->next = newNode;
+                newNode->next = nullptr;
+                tails = newNode;
+                inserted = true;
             }
         }
     }
-    return flag;
+    return inserted;
 }
 
-bool LinkedList::deleteNode(int id) {
-    bool flag = false;
-    Node *current = head;
-    if (id > 0 ) {
-        if (head == NULL) {
-            flag = false;
-        } else {
-            while (id != current->data.id && current->next != NULL){
+
+//Trying Different addNode Version
+//bool LinkedList::addNode(int id, string *info) {
+//    bool flag = false;
+//    if (id > 0 && *info != "/0") {
+//        Node **nodeHold;
+//        cout << endl;
+//        if (head == NULL || id < head->data.id) {
+//            addHead(id, info, head, *nodeHold);
+//            flag = true;
+//        }else{
+//            cout << endl;
+//            Node *current = head;
+//            while (id > current->data.id && current->next != NULL) {
+//                current = current->next;
+//            }
+//            if (id == current->data.id) {
+//                flag = false;
+//            } else if (id > current->data.id && current->next == NULL) {
+//                addTail(id, info, current, *nodeHold);
+//                flag = true;
+//            } else {
+//                addMiddle(id, info, current, *nodeHold);
+//                flag = true;
+//            }
+//        }
+//    }
+//    return flag;
+//}
+
+bool LinkedList::deleteNode(int id){
+    bool removed = false;
+    if (id >= 0) {  // input validation
+        if(head && id == head->data.id && head->next == NULL){//Single Node
+            delete head;
+            head = NULL;
+            removed = true;
+        }else if(head && id == head->data.id && head->next != NULL){ //head
+            Node *current = head;
+            head = head->next;
+            delete current;
+            removed = true;
+            // if exists and id doesnt match
+        }else if(head && head->next != NULL){
+            Node *current = head;
+            Node *currentNext = head->next;
+            while (current->next != NULL && id != currentNext->data.id){
                 current = current->next;
+                currentNext = currentNext->next;
             }
-            if (id != current->data.id) {
-                flag = false;
-            }else if(id == current->data.id && current->prev == NULL && current->next == NULL){
-                delete(current);
-                head = NULL;
-                flag = true;
-            }else if(current->prev == NULL){
-                current->next->prev = NULL;
-                head = current->next;
-                delete (current); //Deallocate
-                flag = true;
-            }else if(current->next == NULL){
-                current->prev->next = NULL;
-                delete (current); //Deallocate
-                flag = true;
-            }else if(id == current->data.id){
-                current->prev->next = current->next;
-                current->next->prev = current->prev;
-                delete (current); //Deallocate
-                flag = true;
+            if(current->next && id == current->next->data.id && current->next->next == NULL){ // tail
+                current->next = currentNext->next;
+                tails = current;
+                delete currentNext;
+                removed = true;
+            }else if(current->next && id == current->next->data.id){ // middle
+                current->next = currentNext->next;
+                delete currentNext;
+                removed = true;
             }
         }
     }
-    return flag;
+    return removed;
 }
+
+//bool LinkedList::deleteNode(int id){
+//    bool removed = false;
+//    Node *current = head;
+//    if (id >= 0) {  // input validation
+//        //int position = hash(id);
+//        if(id == current->data.id && current->next == NULL){//Single Node
+//            delete(current);
+//            head = NULL;
+//            removed = true;
+//        }else if(id == current->data.id && current->next != NULL){ //head
+//            head = current->next;
+//            delete(current);
+//            removed = true;
+//            // if exists and id doesnt match
+//        }else if(head && current->next != NULL){
+//            Node *currentNext = current->next;
+//            while (current->next != NULL && id != currentNext->data.id){
+//                current = current->next;
+//                currentNext = currentNext->next;
+//            }
+//            if(current->next && id == current->next->data.id && current->next->next == NULL){ // tail
+//                current->next = currentNext->next;
+//                tails = current;
+//                delete currentNext;
+//                removed = true;
+//            }else if(current->next && id == current->next->data.id){ // middle
+//                current->next = currentNext->next;
+//                delete currentNext;
+//                removed = true;
+//            }
+//        }
+//    }
+//    return removed;
+//}
+
+
+//bool LinkedList::deleteNode(int id) {
+//    bool flag = false;
+//    Node *current = head;
+//    if (id >= 0 ) {
+//        if (head == NULL) {
+//            flag = false;
+//        } else {
+//            while (id != current->data.id && current->next != NULL){
+//                current = current->next;
+//            }
+//            if (id != current->data.id) {
+//                flag = false;
+//            }else if(id == current->data.id && current->prev == NULL && current->next == NULL){
+//                delete(current);
+//                head = NULL;
+//                flag = true;
+//            }else if(current->prev == NULL){
+//                current->next->prev = NULL;
+//                head = current->next;
+//                delete (current); //Deallocate
+//                flag = true;
+//            }else if(current->next == NULL){
+//                current->prev->next = NULL;
+//                delete (current); //Deallocate
+//                flag = true;
+//            }else if(id == current->data.id){
+//                current->prev->next = current->next;
+//                current->next->prev = current->prev;
+//                delete (current); //Deallocate
+//                flag = true;
+//            }
+//        }
+//    }
+//    return flag;
+//}
 
 bool LinkedList::getNode(int id, Data *info) {
         bool flag = false;
@@ -128,7 +229,7 @@ void LinkedList::printList(bool direction) {
             cout << "Empty " << endl;
         } else {
             while (current != NULL) {
-                cout << current->data.id << " : " << current->data.data << "->";
+                cout << current->data.data << current->data.id << ":" << current->data.weight << "->";
                 current = current->next; // go to the next node
                 i++;
             }
@@ -151,7 +252,7 @@ void LinkedList::printList(bool direction) {
             cout << "Empty " << endl;
         }else{
             while (current) {
-                cout << current->data.id << " : " << current->data.data <<"->";
+                cout << current->data.data << current->data.id << ":" << current->data.weight << "->";
                 current = current->prev;
                 i++;
             }

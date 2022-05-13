@@ -1,10 +1,9 @@
 /*********************
 Name: William Hammel
-Coding 06: Hash Tables
-Purpose:  In this assignment you will create a
-Hash Table class/object (as discussed in class)
-with our standard struct (a struct with an integer id
-and a string for ‘data’).
+Final Project
+Purpose: Description: Create a working bi-directional
+weighted graph class with all the standard methods
+for a data structure of that type.
 **********************/
 
 #ifndef LINKEDLIST_H
@@ -15,7 +14,6 @@ and a string for ‘data’).
 
 using std::cout;
 using std::endl;
-
 
 class LinkedList{
 
@@ -29,7 +27,7 @@ public:
     LinkedList();
     ~LinkedList();
 
-    bool addNode(int, string*); // accepts id and data, and inserts to the list in order
+    bool addNode(int, string*, int); // accepts id and data, and inserts to the list in order
     bool deleteNode(int); // accepts an id and deletes the node
     bool getNode(int, Data*); // retrieves the data from a node from a given id
     void printList(bool = false); // prints forward (default) or backward
@@ -44,6 +42,7 @@ public:
 //private:
     // only attribute needed
     Node *head;
+    Node *tails;
     void addHead(int, string*, Node*, Node*);
     void addMiddle(int, string*, Node*, Node*);
     void addTail(int, string*, Node*, Node*);

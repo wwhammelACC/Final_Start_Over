@@ -11,6 +11,7 @@ for a data structure of that type.
 
 #include "data.h"
 #include "linkedlist.h"
+#include <utility>
 //#include <bits/stdc++.h>
 
 #include <iostream>
@@ -18,7 +19,6 @@ for a data structure of that type.
 #include <vector>
 
 #define GRAPHSIZE 8
-
 
 using std::vector;
 using std::cout;
@@ -36,36 +36,39 @@ public:
 
     bool isEmpty();
 
-    int getNumVertices();
-    int getNumEdges();
+    int getVertexCount();
+    int getEdgeCount();
     int getEdgeWeight();
-    int getVertex();
+    string getVertex(int, int);
 
-    void addEdge(int, string*);
-    void addVertex(int, string*);
-    void removeEdge();
-    void removeVertex();
+    bool addVertex(int, string*);
+    bool addEdge(int, int, string*, int);
+    bool removeEdge(int, int);
+    bool removeVertex(int);
 
-    void printGraph();
+    void printGraph(int);
     void depthFirstTraversal();
     void breadthFirstTraversal(int);
 
     bool edgeExists();
 
-   
+
 
 // private methods
 private:
     VertexNode *head;
-    vector<VertexNode*> vertexList;
+//    vector<VertexNode*> vertexList;
     vector<VertexNode*> edgeList;
-    
     int countEdge;
     int countVertex;
-
     vector<LinkedList*> graphList;
     LinkedList *newLinkedList[GRAPHSIZE];
+    vector<VertexNode*> vertexList;
 
+    //Save for later
+//    vector<int> adj[];
+//    vector<LinkedList*> graphList;
+//    LinkedList *newLinkedList[GRAPHSIZE];
 };
 
 #endif //GRAPH_H

@@ -2,8 +2,8 @@
  * Do not modify this file
  */
 
-#ifndef GRAPH_DATA_H
-#define GRAPH_DATA_H
+#ifndef BINTREE_DATA_H
+#define BINTREE_DATA_H
 
 #include <string>
 #include <vector>
@@ -12,6 +12,7 @@
 using std::string;
 using std::pair;
 using std::vector;
+
 
 struct Data {
     int id;
@@ -38,4 +39,4 @@ struct Node {
 };
 
 
-#endif /* GRAPH_DATA_H */
+#endif /* BINTREE_DATA_H */

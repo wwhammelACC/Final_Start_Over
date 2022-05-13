@@ -16,6 +16,8 @@ for a data structure of that type.
 
 #include "graph.h"
 #include "linkedlist.h"
+#include "data.h"
+#include <vector>
 
 using std::cout;
 using std::endl;
