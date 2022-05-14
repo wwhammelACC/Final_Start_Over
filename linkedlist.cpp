@@ -32,35 +32,7 @@ LinkedList::~LinkedList() {
  * ****************************************
  */
 
-bool LinkedList::addNode(int id, string *info){
-    bool inserted = false;
-    if (id >= 0 && *info != "/0"){
-        // empty list here
-        if(head == NULL) {
-            Node *newNode = new Node;
-            newNode->data.id = id;
-            newNode->data.data = *info;
-            newNode->next = nullptr;
-            head = newNode;
-            tails = head; // essentially renaming headPointers
-            inserted = true;
-        }else{
-            // current next will be new node
-            if(!exists(id)){
-                Node *newNode = new Node;
-                newNode->data.id = id;
-                newNode->data.data = *info;
-                tails->next = newNode;
-                newNode->next = nullptr;
-                tails = newNode;
-                inserted = true;
-            }
-        }
-    }
-    return inserted;
-}
-
-bool LinkedList::addNode2(int id, string *info, int weightID){
+bool LinkedList::addNode(int id, string *info, int weightID){
     bool inserted = false;
     if (id >= 0 && *info != "/0"){
         // empty list here
@@ -230,7 +202,6 @@ bool LinkedList::deleteNode(int id){
 int LinkedList::getHeadId() {
     Node *current = head;
     return current->data.id;
-
 }
 
 bool LinkedList::getNode(int id, Data *info) {
@@ -252,49 +223,6 @@ bool LinkedList::getNode(int id, Data *info) {
         }
     }
     return flag;
-}
-
-void LinkedList::printList2(bool direction) {
-    //bool flag = true;
-    Node *current = head;
-    if (direction == false) {    //traverse forward
-        int i = 1;
-        if (current == NULL) {
-            cout << "Empty " << endl;
-        } else {
-            while (current != NULL) {
-                cout << current->data.data << current->data.id << ":";
-                current = current->next; // go to the next node
-                i++;
-            }
-            cout << "\b\b  ";
-            cout << endl;
-        }
-    } else {
-        current = head; // start a "tracking" pointer by pointing it head
-        int i = 1;
-        bool tail = false;
-        while (current && !tail) { // find the tail
-            if (current->next) {
-                current = current->next;
-            } else {
-                tail = true; // found the tail
-            }
-        }
-        // now traverse it backward
-        if (current == NULL) {
-            cout << "Empty " << endl;
-        }else{
-            while (current) {
-                cout << current->data.data << current->data.id << ":";
-                current = current->prev;
-                i++;
-            }
-            cout << "\b\b  ";
-            cout << endl;
-        }
-    }
-    cout << endl;
 }
 
 void LinkedList::printList(bool direction) {
@@ -380,39 +308,39 @@ bool LinkedList::exists(int id) {
 }
 
 // Private Methods
-void LinkedList::addHead(int id, string* info, Node* current, Node* nodeHold) {
-    nodeAllocate(id, info, &nodeHold);
-    if(current == NULL){
-        nodeHold->prev = NULL;
-        nodeHold->next = NULL;
-    }else
-    {
-        nodeHold->prev = NULL;
-        nodeHold->next = current;
-        current->prev = nodeHold;
-    }
-    head = nodeHold;
-}
-
-void LinkedList::addMiddle(int id, string *info, Node* current, Node* nodeHold){
-    nodeAllocate(id, info, &nodeHold);
-    nodeHold->next = current;
-    nodeHold->prev = current->prev;
-    current->prev->next = nodeHold;
-    current->prev = nodeHold;
-}
-
-void LinkedList::addTail(int id, string *info, Node *current, Node* nodeHold){
-    nodeAllocate(id, info, &nodeHold);
-    nodeHold->next = NULL;
-    nodeHold->prev = current;
-    current->next = nodeHold;
-}
-
-void LinkedList::nodeAllocate(int id, string* info, Node** nodeHold){
-    Node *newNode = new Node;
-    newNode->data.id = id;
-    newNode->data.data = *info;
-    *nodeHold = newNode;
-}
+//void LinkedList::addHead(int id, string* info, Node* current, Node* nodeHold) {
+//    nodeAllocate(id, info, &nodeHold);
+//    if(current == NULL){
+//        nodeHold->prev = NULL;
+//        nodeHold->next = NULL;
+//    }else
+//    {
+//        nodeHold->prev = NULL;
+//        nodeHold->next = current;
+//        current->prev = nodeHold;
+//    }
+//    head = nodeHold;
+//}
+//
+//void LinkedList::addMiddle(int id, string *info, Node* current, Node* nodeHold){
+//    nodeAllocate(id, info, &nodeHold);
+//    nodeHold->next = current;
+//    nodeHold->prev = current->prev;
+//    current->prev->next = nodeHold;
+//    current->prev = nodeHold;
+//}
+//
+//void LinkedList::addTail(int id, string *info, Node *current, Node* nodeHold){
+//    nodeAllocate(id, info, &nodeHold);
+//    nodeHold->next = NULL;
+//    nodeHold->prev = current;
+//    current->next = nodeHold;
+//}
+//
+//void LinkedList::nodeAllocate(int id, string* info, Node** nodeHold){
+//    Node *newNode = new Node;
+//    newNode->data.id = id;
+//    newNode->data.data = *info;
+//    *nodeHold = newNode;
+//}
 

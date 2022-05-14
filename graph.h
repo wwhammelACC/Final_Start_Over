@@ -38,23 +38,25 @@ public:
 
     int getVertexCount();
     int getEdgeCount();
-    int getEdgeWeight();
+    int getEdgeWeight(int);
     string getVertex(int, int);
+    string getEdge(int, int);
     bool getHeadID(int, Data*);
 
     bool addVertex(int, string*);
     bool addEdge(int, string*, int, string*, int);
+//    bool removeEdge(int, int);
     bool removeEdge(int, int);
-    bool removeVertex(int);
+    bool removeVertex(int, int);
 
     void printGraph(int);
-    void printGraph2(int);
 
-    void depthFirstTraversal();
+    void DFS(int);
     void breadthFirstTraversal(int);
 
     bool edgeExists();
 
+//    vector<LinkedList*> graphList; // just this
 
 // private methods
 private:
