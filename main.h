@@ -19,6 +19,7 @@ for a data structure of that type.
 #include "data.h"
 #include <vector>
 
+
 using std::cout;
 using std::endl;
 using std::string;

@@ -2,8 +2,9 @@
  * Do not modify this file
  */
 
-#ifndef BINTREE_DATA_H
-#define BINTREE_DATA_H
+
+#ifndef GRAPH_DATA_H
+#define GRAPH_DATA_H
 
 #include <string>
 #include <vector>
@@ -12,12 +13,6 @@
 using std::string;
 using std::pair;
 using std::vector;
-
-struct edgeData{
-    int id;
-    string data;
-    int weight;
-};
 
 struct Data {
     int id;
@@ -31,12 +26,6 @@ struct VertexNode {
     VertexNode *prev;
 };
 
-struct EdgeNode {
-    edgeData data;
-    EdgeNode *next;
-    EdgeNode *prev;
-};
-
 struct Node {
     Data data;
     Node *next;
@@ -44,4 +33,4 @@ struct Node {
 };
 
 
-#endif /* BINTREE_DATA_H */
+#endif /* GRAPH_DATA_H */

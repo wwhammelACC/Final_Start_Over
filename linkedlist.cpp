@@ -1,9 +1,10 @@
 /*********************
 Name: William Hammel
-Final Project
-Purpose: Description: Create a working bi-directional
-weighted graph class with all the standard methods
-for a data structure of that type.
+Coding 06: Hash Tables
+Purpose:  In this assignment you will create a
+Hash Table class/object (as discussed in class)
+with our standard struct (a struct with an integer id
+and a string for ‘data’).
 **********************/
 
 #include "linkedlist.h"
@@ -17,8 +18,8 @@ for a data structure of that type.
 
 //constructor
 LinkedList::LinkedList() {
+
     head = NULL;
-    tails = NULL;
 }
 
 //desctructor
@@ -31,6 +32,35 @@ LinkedList::~LinkedList() {
  * Public
  * ****************************************
  */
+
+//Trying Different addNode Version
+//bool LinkedList::addNode(int id, string *info) {
+//    bool flag = false;
+//    if (id > 0 && *info != "/0") {
+//        Node **nodeHold;
+//        cout << endl;
+//        if (head == NULL || id < head->data.id) {
+//            addHead(id, info, head, *nodeHold);
+//            flag = true;
+//        }else{
+//            cout << endl;
+//            Node *current = head;
+//            while (id > current->data.id && current->next != NULL) {
+//                current = current->next;
+//            }
+//            if (id == current->data.id) {
+//                flag = false;
+//            } else if (id > current->data.id && current->next == NULL) {
+//                addTail(id, info, current, *nodeHold);
+//                flag = true;
+//            } else {
+//                addMiddle(id, info, current, *nodeHold);
+//                flag = true;
+//            }
+//        }
+//    }
+//    return flag;
+//}
 
 bool LinkedList::addNode(int id, string *info, int weightID){
     bool inserted = false;
@@ -61,36 +91,6 @@ bool LinkedList::addNode(int id, string *info, int weightID){
     }
     return inserted;
 }
-
-
-//Trying Different addNode Version
-//bool LinkedList::addNode(int id, string *info) {
-//    bool flag = false;
-//    if (id > 0 && *info != "/0") {
-//        Node **nodeHold;
-//        cout << endl;
-//        if (head == NULL || id < head->data.id) {
-//            addHead(id, info, head, *nodeHold);
-//            flag = true;
-//        }else{
-//            cout << endl;
-//            Node *current = head;
-//            while (id > current->data.id && current->next != NULL) {
-//                current = current->next;
-//            }
-//            if (id == current->data.id) {
-//                flag = false;
-//            } else if (id > current->data.id && current->next == NULL) {
-//                addTail(id, info, current, *nodeHold);
-//                flag = true;
-//            } else {
-//                addMiddle(id, info, current, *nodeHold);
-//                flag = true;
-//            }
-//        }
-//    }
-//    return flag;
-//}
 
 bool LinkedList::deleteNode(int id){
     bool removed = false;
@@ -127,46 +127,10 @@ bool LinkedList::deleteNode(int id){
     return removed;
 }
 
-//bool LinkedList::deleteNode(int id){
-//    bool removed = false;
-//    Node *current = head;
-//    if (id >= 0) {  // input validation
-//        //int position = hash(id);
-//        if(id == current->data.id && current->next == NULL){//Single Node
-//            delete(current);
-//            head = NULL;
-//            removed = true;
-//        }else if(id == current->data.id && current->next != NULL){ //head
-//            head = current->next;
-//            delete(current);
-//            removed = true;
-//            // if exists and id doesnt match
-//        }else if(head && current->next != NULL){
-//            Node *currentNext = current->next;
-//            while (current->next != NULL && id != currentNext->data.id){
-//                current = current->next;
-//                currentNext = currentNext->next;
-//            }
-//            if(current->next && id == current->next->data.id && current->next->next == NULL){ // tail
-//                current->next = currentNext->next;
-//                tails = current;
-//                delete currentNext;
-//                removed = true;
-//            }else if(current->next && id == current->next->data.id){ // middle
-//                current->next = currentNext->next;
-//                delete currentNext;
-//                removed = true;
-//            }
-//        }
-//    }
-//    return removed;
-//}
-
-
 //bool LinkedList::deleteNode(int id) {
 //    bool flag = false;
 //    Node *current = head;
-//    if (id >= 0 ) {
+//    if (id > 0 ) {
 //        if (head == NULL) {
 //            flag = false;
 //        } else {
@@ -267,6 +231,50 @@ void LinkedList::printList(bool direction) {
     }
     cout << endl;
 }
+
+
+//void LinkedList::printList(bool direction) {
+//    //bool flag = true;
+//    Node *current = head;
+//    if (direction == false) {    //traverse forward
+//        int i = 1;
+//        if (current == NULL) {
+//            cout << "Empty " << endl;
+//        } else {
+//            while (current != NULL) {
+//                cout << current->data.id << " : " << current->data.data << "->";
+//                current = current->next; // go to the next node
+//                i++;
+//            }
+//            cout << "\b\b  ";
+//            cout << endl;
+//        }
+//    } else {
+//        current = head; // start a "tracking" pointer by pointing it head
+//        int i = 1;
+//        bool tail = false;
+//        while (current && !tail) { // find the tail
+//            if (current->next) {
+//                current = current->next;
+//            } else {
+//                tail = true; // found the tail
+//            }
+//        }
+//        // now traverse it backward
+//        if (current == NULL) {
+//            cout << "Empty " << endl;
+//        }else{
+//            while (current) {
+//                cout << current->data.id << " : " << current->data.data <<"->";
+//                current = current->prev;
+//                i++;
+//            }
+//            cout << "\b\b  ";
+//            cout << endl;
+//        }
+//    }
+//    cout << endl;
+//}
 
 int LinkedList::getCount() {
     int count = 0;

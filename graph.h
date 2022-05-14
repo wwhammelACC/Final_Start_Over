@@ -6,6 +6,7 @@ weighted graph class with all the standard methods
 for a data structure of that type.
 **********************/
 
+
 #ifndef GRAPH_H
 #define GRAPH_H
 
@@ -19,6 +20,7 @@ for a data structure of that type.
 #include <vector>
 
 #define GRAPHSIZE 8
+
 
 using std::vector;
 using std::cout;
@@ -34,8 +36,6 @@ public:
     Graph(); // constructor
     ~Graph(); // destructor
 
-    bool isEmpty();
-
     int getVertexCount();
     int getEdgeCount();
     int getEdgeWeight(int);
@@ -43,38 +43,31 @@ public:
     string getEdge(int, int);
     bool getHeadID(int, Data*);
 
-    bool addVertex(int, string*);
     bool addEdge(int, string*, int, string*, int);
-//    bool removeEdge(int, int);
+    bool addVertex(int, string*);
     bool removeEdge(int, int);
     bool removeVertex(int, int);
 
     void printGraph(int);
-
     void DFS(int);
     void breadthFirstTraversal(int);
 
-    bool edgeExists();
-
-//    vector<LinkedList*> graphList; // just this
+    bool clearGraph();
+//    bool edgeExists();
+//    bool isEmpty();
 
 // private methods
 private:
     VertexNode *head;
-    //vector<VertexNode*> vertexList;
-    //vector<VertexNode*> edgeList;
+    Node *tails;
+    vector<VertexNode*> vertexList;
+    vector<VertexNode*> edgeList;
     int countEdge;
     int countVertex;
 
-    vector<LinkedList*> graphList; // just this
-
+    vector<LinkedList*> graphList;
 //    LinkedList *newLinkedList[GRAPHSIZE];
-//    vector<VertexNode*> vertexList;
 
-    //Save for later
-//    vector<int> adj[];
-//    vector<LinkedList*> graphList;
-//    LinkedList *newLinkedList[GRAPHSIZE];
 };
 
 #endif //GRAPH_H
