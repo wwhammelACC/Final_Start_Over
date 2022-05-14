@@ -7,6 +7,7 @@ with our standard struct (a struct with an integer id
 and a string for ‘data’).
 **********************/
 
+
 #include "linkedlist.h"
 
 /*
