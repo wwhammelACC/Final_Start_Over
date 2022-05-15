@@ -6,7 +6,6 @@ weighted graph class with all the standard methods
 for a data structure of that type.
 **********************/
 
-
 #ifndef MAIN_H
 #define MAIN_H
 
@@ -17,9 +16,8 @@ for a data structure of that type.
 
 #include "graph.h"
 #include "linkedlist.h"
-#include "data.h"
-#include <vector>
-
+#define RANDOM_MULTIPLIER 10
+#define CHOICES 12
 
 using std::cout;
 using std::endl;

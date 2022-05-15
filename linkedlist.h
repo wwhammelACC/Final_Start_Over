@@ -1,12 +1,10 @@
 /*********************
 Name: William Hammel
-Coding 06: Hash Tables
-Purpose:  In this assignment you will create a
-Hash Table class/object (as discussed in class)
-with our standard struct (a struct with an integer id
-and a string for ‘data’).
+Final Project
+Purpose: Description: Create a working bi-directional
+weighted graph class with all the standard methods
+for a data structure of that type.
 **********************/
-
 
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
