@@ -21,10 +21,8 @@ int main() {
         ids[i] = i;
         for (int j = 0; j < GRAPHSIZE; j++) {
             strs[j] = 'A' + j;
-            //buffer[j] = 'A' + i;
         }
         buffer[GRAPHSIZE - 1] = '\0';
-        //strs[i] = buffer;
     }
     /*
      * Show test data
@@ -121,25 +119,10 @@ int main() {
 //    GET VERTEX TESTING
     cout << "Initial testing getVertex " << endl;
     for (int i = 0; i < GRAPHSIZE; i++){
-        for(int j = 0; j < GRAPHSIZE; j++){
-            if(graph->getVertex(j, i)!= ""){
-                cout << "found vertex " << graph->getVertex(j, i) << i << ":" << " in graphList " << j << endl;
-            }else{
-                cout << "empty string " << endl;
-            }
-        }
-    }
-    cout << endl;
-
-//  GET EDGE TESTING
-    cout << "Initial testing getEdge " << endl;
-    for (int i = 0; i < GRAPHSIZE; i++){
-        for(int j = 0; j < GRAPHSIZE; j++){
-            if(graph->getEdge(j, i)!= ""){
-                cout << "found edge " << graph->getEdge(j, i) << i << ":" << " in graphList " << j << endl;
-            }else{
-                cout << "empty string " << endl;
-            }
+        if(graph->getVertex(i)!= ""){
+            cout << "found vertex " << graph->getVertex(i) << endl;
+        }else{
+            cout << "not found " << endl;
         }
     }
     cout << endl;
@@ -192,9 +175,9 @@ int main() {
     cout << "Getting edge count before removal " << endl;
     cout << "There are " << graph->getEdgeCount() << " Edge entries in graphList " << endl;
     cout << endl;
-    cout << "Trying indexes : " << ids[2] << ":" << ids[2] << "..." << endl;
+    cout << "Trying to remove edge : " << ids[2] << ":" << ids[2] << "..." << endl;
     if (graph->removeEdge(2, 2)) { // removing...
-        cout << "Success, index: "<< ids[2] << ids[2] << " removed" << endl;
+        cout << "Success, index: "<< ids[2] << ":" << ids[2] << " removed" << endl;
     } else {
         cout << "Failed, index: " << ids[2] << ids[2] << " was not found" << endl;
     }
@@ -210,36 +193,228 @@ int main() {
     cout << "Getting vertex count before removal " << endl;
     cout << "There are " << graph->getVertexCount() << " Vertex entries in graphList " << endl;
     cout << endl;
-    cout << "Trying to remove vertex: " << graph->getVertex(3, 3) << " in graph " << 3 << "..." << endl;
-    if (graph->removeVertex(3,3)) { // vertexList 3, removing index 3
-        cout << "Success, index: " << graph->getVertex(3, 3) << " removed" << endl;
+    if (graph->removeVertex(4)) { // vertexList 3, removing index 3
+        cout << "Success, index: " << graph->getVertex(4) << " removed" << endl;
     } else {
-        cout << "Failed, index: " << graph->getVertex(3, 3) << " was not found" << endl;
+        cout << "Failed, index: " << graph->getVertex(4) << " was not found" << endl;
+
     }
     cout << "Confirming if vertex was removed after removeVertex called" << endl;
     cout << "There are " << graph->getVertexCount() << " Vertex entries in graphList " << endl;
     cout << endl;
 
 //  PRINT TESTING AFTER ADDING EDGE CONNECTIONS
-    cout << "Print for each graph list after Edge Data added " << endl;
+    cout << "Print for each graph list before clearing " << endl;
     for (int i = 0; i < GRAPHSIZE; i++){
         graph->printGraph(i);
     }
+    cout << "There are " << graph->getVertexCount() << " Vertex entries in graphList " << endl;
+    cout << "There are " << graph->getEdgeCount() << " Edge entries in graphList " << endl;
+
+    cout << "Trying to clear the whole graph " << endl;
+    graph->clearGraph();
+
+    cout << "Print for each graph list after graph cleared " << endl;
+    for (int i = 0; i < GRAPHSIZE; i++){
+        graph->printGraph(i);
+    }
+    cout << "There are " << graph->getVertexCount() << " Vertex entries in graphList " << endl;
+    cout << "There are " << graph->getEdgeCount() << " Edge entries in graphList " << endl;
+    cout << endl;
 
     //##########################################
     //TESTING VARIOUS COMBINATIONS OF OPERATIONS
     //##########################################
 
-    cout << "Testing various combinations of methods " << endl;
-    cout << "Current graph and vertex count and edge count " << endl;
+    //************************************************
+    //******** FILLING TESTS *****************
+    //************************************************
+
+    cout << "******* FILLING GRAPH TESTING *****************************" << endl;
     cout << endl;
+    cout << "Showing Graph is empty... " << endl;
     for (int i = 0; i < GRAPHSIZE; i++){
         graph->printGraph(i);
     }
-    cout << "There are " << graph->getEdgeCount() << " edge entries in the current graph." << endl;
     cout << "done" << endl;
     cout << endl;
-    cout << "There are " << graph->getVertexCount() << " vertex entries in the current graph." << endl;
+    cout << "There are " << graph->getVertexCount() << " Vertex entries in graphList " << endl;
+    cout << "There are " << graph->getEdgeCount() << " Edge entries in graphList " << endl;
+    cout << endl;
+
+    cout << "Adding vertices" << endl;
+    for (int i = 0; i < GRAPHSIZE; i++) {
+        if (graph->addVertex(ids[i], &strs[i])) {
+            cout << "success. entry inserted." << endl;
+            cout << "There are " << graph->getVertexCount() << " Vertex entries in vertexList " << endl;
+            cout << "There are " << graph->getEdgeCount() << " Edge connection entries in graphList " << endl;
+            cout << endl;
+        } else {
+            cout << endl;
+            cout << "failed to insert entry: " << ids[i] << endl;
+            cout << endl;
+        }
+    }
+    cout << "Adding edges" << endl;
+    graph->addEdge(0, &vertexA, 1, &vertexB, 4); //A to B
+    graph->addEdge(0, &vertexA, 3, &vertexD, 8); //A to D
+    cout << endl;
+    graph->addEdge(1, &vertexB, 0, &vertexA, 4); //B to A
+    graph->addEdge(1, &vertexB, 2, &vertexC, 3); //B to C
+    cout << endl;
+    graph->addEdge(2, &vertexC, 1, &vertexB, 3); //C to B
+    graph->addEdge(2, &vertexC, 3, &vertexD, 2); //C to D
+    cout << endl;
+    graph->addEdge(3, &vertexD, 0, &vertexA, 8); //D to A
+    graph->addEdge(3, &vertexD, 2, &vertexC, 5); //D to C
+    graph->addEdge(3, &vertexD, 4, &vertexE, 1); //D to E
+    cout << endl;
+    graph->addEdge(4, &vertexE, 4, &vertexD, 1); //E to D
+    cout << endl;
+    cout << "Print for each graph list after Vertex and Edge Data added " << endl;
+    for (int i = 0; i < GRAPHSIZE; i++){
+        graph->printGraph(i);
+    }
+    cout << "There are " << graph->getVertexCount() << " Vertex entries in graphList " << endl;
+    cout << "There are " << graph->getEdgeCount() << " Edge entries in graphList " << endl;
+    cout << endl;
+
+    cout << "testing getVertex in a graph with elements in it " << endl;
+    cout << endl;
+    cout << "Testing a couple random getVertex retrievals from a graph with elements in it " << endl;
+    for (int i = 0; i < GRAPHSIZE; i++){
+        int randID = ids[rand() % GRAPHSIZE];
+        if(graph->getVertex(randID)!= ""){
+            cout << "found vertex " << graph->getVertex(randID) << endl;
+        }else{
+            cout << "not found " << endl;
+        }
+    }
+    cout << endl;
+
+    cout << "Testing a couple random edge removals from a graph with elements in it " << endl;
+    for(int i = 0; i < 7; i++){
+        int randID = ids[rand() % GRAPHSIZE];
+        if(graph->removeEdge(randID, randID)) {
+            cout << "Success: " << randID << " removed" << endl;
+        } else {
+            cout << "Failed: " << randID << " was not found" << endl;
+        }
+        cout << endl;
+    }
+    cout << "testing print and getEdgeCount after removals " << endl;
+    for (int i = 0; i < GRAPHSIZE; i++){
+        graph->printGraph(i);
+    }
+    cout << "There are " << graph->getEdgeCount() << " Edge entries in the table." << endl;
+    cout << "done" << endl;
+    cout << endl;
+
+    cout << endl;
+    cout << "testing removal of edges with a for loop " << endl;
+    for (int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            if (graph->removeEdge(ids[i], ids[j])) {
+                cout << "Success: " << " removed" << endl;
+            } else {
+                cout << "Failed: " << " was not found" << endl;
+            }
+        }
+    }
+    cout << endl;
+    cout << "testing print after removals " << endl;
+    for (int i = 0; i < GRAPHSIZE; i++){
+        graph->printGraph(i);
+    }
+    cout << "There are " << graph->getEdgeCount() << " Edge entries in the graph." << endl;
+    cout << "done" << endl;
+    cout << endl;
+
+    cout << "Testing a couple random vertex removals from a graph with elements in it " << endl;
+    for(int i = 0; i < 7; i++){
+        int randID = ids[rand() % GRAPHSIZE];
+        if(graph->removeVertex(randID)) {
+            cout << "Success: " << randID << " removed" << endl;
+        } else {
+            cout << "Failed: " << randID << " was not found" << endl;
+        }
+        cout << endl;
+    }
+    cout << "testing print and getVertexCount after removals " << endl;
+    for (int i = 0; i < GRAPHSIZE; i++){
+        graph->printGraph(i);
+    }
+    cout << "There are " << graph->getVertexCount() << "Vertex entries in the graph." << endl;
+    cout << "done" << endl;
+    cout << endl;
+    cout << "testing removal of vertices with a for loop " << endl;
+    for (int i = 0; i < 3; i++){
+        if (graph->removeVertex(ids[i])) {
+            cout << "Success: " << " removed" << endl;
+        } else {
+            cout << "Failed: " << " was not found" << endl;
+        }
+    }
+    cout << endl;
+    cout << "testing print after removals " << endl;
+    for (int i = 0; i < GRAPHSIZE; i++){
+        graph->printGraph(i);
+    }
+    cout << "There are " << graph->getVertexCount() << " Vertex entries in the graph." << endl;
+    cout << "done" << endl;
+    cout << endl;
+
+    cout << "Testing various combinations of methods " << endl;
+    cout << endl;
+    cout << "Clearing Graph " << endl;
+    cout << "Trying to clear the whole graph " << endl;
+    graph->clearGraph();
+
+    cout << "Print for each graph list after graph cleared " << endl;
+    for (int i = 0; i < GRAPHSIZE; i++){
+        graph->printGraph(i);
+    }
+    cout << "There are " << graph->getVertexCount() << " Vertex entries in graphList " << endl;
+    cout << "There are " << graph->getEdgeCount() << " Edge entries in graphList " << endl;
+    cout << endl;
+    cout << "Filling Graph again " << endl;
+    cout << endl;
+    cout << "Adding vertices" << endl;
+    for (int i = 0; i < GRAPHSIZE; i++) {
+        if (graph->addVertex(ids[i], &strs[i])) {
+            cout << "success. entry inserted." << endl;
+            cout << "There are " << graph->getVertexCount() << " Vertex entries in vertexList " << endl;
+            cout << "There are " << graph->getEdgeCount() << " Edge connection entries in graphList " << endl;
+            cout << endl;
+        } else {
+            cout << endl;
+            cout << "failed to insert entry: " << ids[i] << endl;
+            cout << endl;
+        }
+    }
+    cout << "Adding edges" << endl;
+    graph->addEdge(0, &vertexA, 1, &vertexB, 4); //A to B
+    graph->addEdge(0, &vertexA, 3, &vertexD, 8); //A to D
+    cout << endl;
+    graph->addEdge(1, &vertexB, 0, &vertexA, 4); //B to A
+    graph->addEdge(1, &vertexB, 2, &vertexC, 3); //B to C
+    graph->addEdge(1, &vertexB, 3, &vertexD, 5); //B to D
+    cout << endl;
+    graph->addEdge(2, &vertexC, 1, &vertexB, 3); //C to B
+    graph->addEdge(2, &vertexC, 3, &vertexD, 2); //C to D
+    cout << endl;
+    graph->addEdge(3, &vertexD, 0, &vertexA, 8); //D to A
+    graph->addEdge(3, &vertexD, 1, &vertexB, 5); //D to B
+    graph->addEdge(3, &vertexD, 2, &vertexC, 5); //D to C
+    graph->addEdge(3, &vertexD, 4, &vertexE, 1); //D to E
+    cout << endl;
+    graph->addEdge(4, &vertexE, 4, &vertexD, 1); //E to D
+    cout << "Print for each graph list after Vertex and Edge Data added " << endl;
+    for (int i = 0; i < GRAPHSIZE; i++){
+        graph->printGraph(i);
+    }
+    cout << "There are " << graph->getVertexCount() << " Vertex entries in graphList " << endl;
+    cout << "There are " << graph->getEdgeCount() << " Edge entries in graphList " << endl;
     cout << endl;
 
     // ADDING VERTICES
@@ -250,7 +425,7 @@ int main() {
         cout << endl;
     }else{
         cout << endl;
-        cout << "failed to insert entry: " << 8 << endl;
+        cout << "failed to insert entry: " << 9 << endl;
         cout << endl;
     }
     string vertexK = "K";
@@ -260,7 +435,7 @@ int main() {
         cout << endl;
     }else{
         cout << endl;
-        cout << "failed to insert entry: " << 8 << endl;
+        cout << "failed to insert entry: " << 10 << endl;
         cout << endl;
     }
 
@@ -303,112 +478,55 @@ int main() {
         graph->printGraph(i);
     }
     cout << "Testing a couple random vertex retrievals from a graph " << endl;
+    cout << "Initial testing getVertex " << endl;
     for (int i = 0; i < GRAPHSIZE; i++){
         int randID = ids[rand() % GRAPHSIZE];
-        for(int j = 0; j < GRAPHSIZE; j++){
-            if(graph->getVertex(j, randID)!= ""){
-                cout << "found vertex " << graph->getVertex(j, randID) << randID << ":" << " in graphList " << j << endl;
-            }else{
-                cout << "empty string " << endl;
-            }
+        if(graph->getVertex(randID)!= ""){
+            cout << "found vertex " << graph->getVertex(randID) << endl;
+        }else{
+            cout << "not found " << endl;
         }
     }
     cout << endl;
     cout << "testing retrieval of -1 in get vertex in a graph with elements in it " << endl;
     cout << "Trying: " << "-1 " << "..." << endl;
-    if(graph->getVertex(0, -1)!= ""){
-        cout << "found -1 " << ": " << graph->getVertex(0, -1) << endl;
+    if(graph->getVertex(-1)!= ""){
+        cout << "found -1 " << ": " << graph->getVertex(-1) << endl;
     }else{
         cout << "not found " << endl;
     }
     cout << endl;
-    if(graph->getVertex(9, -1)!= ""){
-        cout << "found -1 " << ": " << graph->getVertex(9, -1) << endl;
+    if(graph->getVertex(9)!= ""){
+        cout << "found 9 " << ": " << graph->getVertex(9) << endl;
     }else{
         cout << "not found " << endl;
     }
     cout << endl;
-    if(graph->getVertex(-1, -1)!= ""){
-        cout << "found -1 " << ": " << graph->getVertex(-1, -1) << endl;
+    if(graph->getVertex(0)!= ""){
+        cout << "found 0 " << ": " << graph->getVertex(0) << endl;
     }else{
         cout << "not found " << endl;
     }
     cout << endl;
-
-    cout << "testing retrieval of 314159 in a table with elements in it " << endl;
+    cout << "testing vertex retrieval of 314159 in a graph with elements in it " << endl;
     cout << "Trying: " << "314159 " << "..." << endl;
-    if(graph->getVertex(0, 314159)!= ""){
-        cout << "found 314159 " << ": " << graph->getVertex(0, 314159) << endl;
+    if(graph->getVertex(314159)!= ""){
+        cout << "found 314159 " << ": " << graph->getVertex(314159) << endl;
     }else{
         cout << "not found " << endl;
     }
     cout << endl;
-    if(graph->getVertex(5, 314159)!= ""){
-        cout << "found 314159 " << ": " << graph->getVertex(5, 314159) << endl;
-    }else{
-        cout << "not found " << endl;
-    }
-    cout << endl;
-
-    cout << "Testing a couple random edge retrievals from a graph " << endl;
-    for (int i = 0; i < GRAPHSIZE; i++){
-        int randID = ids[rand() % GRAPHSIZE];
-        for(int j = 0; j < GRAPHSIZE; j++){
-            if(graph->getEdge(j, randID)!= ""){
-                cout << "found edge " << graph->getEdge(j, randID) << randID << ":" << " in graphList " << j << endl;
-            }else{
-                cout << "not found " << endl;
-            }
-        }
-    }
-    cout << endl;
-    cout << endl;
-    cout << "testing retrieval of -1 in get vertex in a graph with elements in it " << endl;
-    cout << "Trying: " << "-1 " << "..." << endl;
-    if(graph->getEdge(0, -1)!= ""){
-        cout << "found -1 " << ": " << graph->getEdge(0, -1) << endl;
-    }else{
-        cout << "not found " << endl;
-    }
-    cout << endl;
-    if(graph->getEdge(9, -1)!= ""){
-        cout << "found -1 " << ": " << graph->getEdge(9, -1) << endl;
-    }else{
-        cout << "not found " << endl;
-    }
-    cout << endl;
-    if(graph->getEdge(-1, -1)!= ""){
-        cout << "found -1 " << ": " << graph->getEdge(-1, -1) << endl;
-    }else{
-        cout << "not found " << endl;
-    }
-    cout << endl;
-    cout << "testing retrieval of 314159 in a table with elements in it " << endl;
-    cout << "Trying: " << "314159 " << "..." << endl;
-    if(graph->getVertex(0, 314159)!= ""){
-        cout << "found 314159 " << ": " << graph->getVertex(0, 314159) << endl;
-    }else{
-        cout << "not found " << endl;
-    }
-    cout << endl;
-    if(graph->getVertex(5, 314159)!= ""){
-        cout << "found 314159 " << ": " << graph->getVertex(5, 314159) << endl;
-    }else{
-        cout << "not found " << endl;
-    }
-    cout << endl;
-
 
 //     MORE REMOVAL TESTING
     cout << "Testing a couple random edge removals from a graph with elements in it " << endl;
-    cout << "There are " << graph->getEdgeCount() << " entries in the table before removal." << endl;
+    cout << "There are " << graph->getEdgeCount() << "Edge entries in the table before removal." << endl;
     int randID = ids[rand() % GRAPHSIZE];
     if(graph->removeEdge(randID, 2)){
         cout << "edge removed " << endl;
     }else{
         cout << "edge not removed " << endl;
     }
-    if(graph->removeEdge(4, randID)){
+    if(graph->removeEdge(4, randID)){\
         cout << "edge removed " << endl;
     }else{
         cout << "edge not removed " << endl;
@@ -418,32 +536,47 @@ int main() {
     }else{
         cout << "edge not removed " << endl;
     }
-    cout << "testing printGraph and getVertexCount after removal " << endl;
+    if(graph->removeEdge(-1, randID)){
+        cout << "edge removed " << endl;
+    }else{
+        cout << "edge not removed " << endl;
+    }
+    if(graph->removeEdge(31459, randID)){
+        cout << "edge removed " << endl;
+    }else{
+        cout << "edge not removed " << endl;
+    }
+    if(graph->removeEdge(randID, 31459)){
+        cout << "edge removed " << endl;
+    }else{
+        cout << "edge not removed " << endl;
+    }
+    cout << "testing printGraph and getEdgeCount after removal " << endl;
     for (int i = 0; i < GRAPHSIZE; i++){
         graph->printGraph(i);
     }
-    cout << "There are " << graph->getEdgeCount() << " entries in the table." << endl;
+    cout << "There are " << graph->getEdgeCount() << " Edge entries in the table." << endl;
     cout << "done" << endl;
     cout << endl;
 
     cout << "Testing a couple random vertex removals from a graph with elements in it " << endl;
-    cout << "There are " << graph->getVertexCount() << " vertex entries in the graph before removal." << endl;
-    if(graph->removeVertex(randID, 2)){
+    cout << "There are " << graph->getVertexCount() << " Vertex entries in the graph before removal." << endl;
+    if(graph->removeVertex(randID)){
         cout << "vertex removed " << endl;
     }else{
         cout << "vertex not removed" << endl;
     }
-    if(graph->removeVertex(3, randID)){
+    if(graph->removeVertex(3)){
         cout << "vertex removed" << endl;
     }else{
         cout << "vertex not removed" << endl;
     }
-    if(graph->removeVertex(randID, randID)){
+    if(graph->removeVertex(-1)){
         cout << "vertex removed " << endl;
     }else{
         cout << "vertex not removed" << endl;
     }
-    if(graph->removeVertex(0, 1)){
+    if(graph->removeVertex(0)){
         cout << "vertex removed " << endl;
     }else{
         cout << "vertex not removed" << endl;
@@ -452,20 +585,13 @@ int main() {
     for (int i = 0; i < GRAPHSIZE; i++){
         graph->printGraph(i);
     }
-    cout << "There are " << graph->getVertexCount() << " vertex entries in the graph." << endl;
+    cout << "There are " << graph->getVertexCount() << " Vertex entries in the graph." << endl;
     cout << "done" << endl;
     cout << endl;
-
     cout << "testing vertex removal of -1 from a graph with elements in it " << endl;
     cout << endl;
     cout << "Trying: " << "-1 " << "..." << endl;
-    if (graph->removeVertex(0, -1)) {
-        cout << "Success: " << "-1 " << " removed" << endl;
-    } else {
-        cout << "Failed: " << "-1 " << " was not found" << endl;
-    }
-    cout << endl;
-    if (graph->removeVertex(-1, 3)) {
+    if (graph->removeVertex(-1)) {
         cout << "Success: " << "-1 " << " removed" << endl;
     } else {
         cout << "Failed: " << "-1 " << " was not found" << endl;
@@ -474,7 +600,7 @@ int main() {
     cout << "testing vertex removal of 314159 from a graph with elements in it " << endl;
     cout << endl;
     cout << "Trying: " << "314159 " << "..." << endl;
-    if (graph->removeVertex(0, 314159)) {
+    if (graph->removeVertex(314159)) {
         cout << "Success: " << "314159 " << " removed" << endl;
     } else {
         cout << "Failed: " << "314159 " << " was not found" << endl;
@@ -486,10 +612,61 @@ int main() {
     }
     cout << "There are " << graph->getVertexCount() << " Vertex entries in graphList " << endl;
     cout << "There are " << graph->getEdgeCount() << " Edge entries in graphList " << endl;
+    cout << endl;
 
-    //************************************************
-    //******** RANDOM TESTS ***************************
-    //************************************************/
+    /************************************************
+    ******** RANDOM TESTS ***************************
+    ************************************************/
+
+    cout << "Clearing Graph " << endl;
+    cout << "Trying to clear the whole graph " << endl;
+    graph->clearGraph();
+    cout << "Print for each graph list after graph cleared " << endl;
+    for (int i = 0; i < GRAPHSIZE; i++){
+        graph->printGraph(i);
+    }
+    cout << "There are " << graph->getVertexCount() << " Vertex entries in graphList " << endl;
+    cout << "There are " << graph->getEdgeCount() << " Edge entries in graphList " << endl;
+    cout << endl;
+    cout << "Filling Graph again " << endl;
+    cout << endl;
+    cout << "Adding vertices" << endl;
+    for (int i = 0; i < GRAPHSIZE; i++) {
+        if (graph->addVertex(ids[i], &strs[i])) {
+            cout << "success. entry inserted." << endl;
+            cout << "There are " << graph->getVertexCount() << " Vertex entries in vertexList " << endl;
+            cout << "There are " << graph->getEdgeCount() << " Edge connection entries in graphList " << endl;
+            cout << endl;
+        } else {
+            cout << endl;
+            cout << "failed to insert entry: " << ids[i] << endl;
+            cout << endl;
+        }
+    }
+    cout << "Adding edges" << endl;
+    graph->addEdge(0, &vertexA, 1, &vertexB, 4); //A to B
+    graph->addEdge(0, &vertexA, 3, &vertexD, 8); //A to D
+    cout << endl;
+    graph->addEdge(1, &vertexB, 0, &vertexA, 4); //B to A
+    graph->addEdge(1, &vertexB, 2, &vertexC, 3); //B to C
+    graph->addEdge(1, &vertexB, 3, &vertexD, 5); //B to D
+    cout << endl;
+    graph->addEdge(2, &vertexC, 1, &vertexB, 3); //C to B
+    graph->addEdge(2, &vertexC, 3, &vertexD, 2); //C to D
+    cout << endl;
+    graph->addEdge(3, &vertexD, 0, &vertexA, 8); //D to A
+    graph->addEdge(3, &vertexD, 1, &vertexB, 5); //D to B
+    graph->addEdge(3, &vertexD, 2, &vertexC, 5); //D to C
+    graph->addEdge(3, &vertexD, 4, &vertexE, 1); //D to E
+    cout << endl;
+    graph->addEdge(4, &vertexE, 4, &vertexD, 1); //E to D
+    cout << "Print for each graph list after Vertex and Edge Data added " << endl;
+    for (int i = 0; i < GRAPHSIZE; i++){
+        graph->printGraph(i);
+    }
+    cout << "There are " << graph->getVertexCount() << " Vertex entries in graphList " << endl;
+    cout << "There are " << graph->getEdgeCount() << " Edge entries in graphList " << endl;
+    cout << endl;
 
     cout << "******** RANDOM TESTS ***************************" << endl;
     cout << "using switch to randomly test methods " << endl;
@@ -527,7 +704,7 @@ int main() {
                 // removeVertex
                 randID2 = ids[rand() % GRAPHSIZE];
                 cout << "removeVertex " << endl;
-                if (graph->removeVertex(randID2, randID2)) {
+                if (graph->removeVertex(randID2)) {
                     cout << "Success: " << randID2 << " removed" << endl;
                 } else {
                     cout << "Failed: " << randID2 << " was not found" << endl;
@@ -547,31 +724,16 @@ int main() {
                 break;
             case 8:
             case 9:
-                // get edge
-                randID2 = ids[rand() % GRAPHSIZE];
-                cout << "getEdge " << endl;
-                for (int i = 0; i < GRAPHSIZE; i++){
-                    for(int j = 0; j < GRAPHSIZE; j++){
-                        if(graph->getEdge(j, randID)!= ""){
-                            cout << "found edge " << graph->getEdge(j, randID2) << randID2 << ":" << " in graphList " << j << endl;
-                        }else{
-                            cout << "not found " << endl;
-                        }
-                    }
-                }
             case 10:
                 // get vertex
                 randID = ids[rand() % GRAPHSIZE];
                 cout << "getVertex " << endl;
-                for (int i = 0; i < GRAPHSIZE; i++) {
-                    int randID2 = ids[rand() % GRAPHSIZE];
-                    for (int j = 0; j < GRAPHSIZE; j++) {
-                        if (graph->getVertex(j, randID2) != "") {
-                            cout << "found vertex " << graph->getVertex(j, randID2) << randID2 << ":" << " in graphList "
-                                 << j << endl;
-                        } else {
-                            cout << "empty string " << endl;
-                        }
+                for (int i = 0; i < GRAPHSIZE; i++){
+                    int randID = ids[rand() % GRAPHSIZE];
+                    if(graph->getVertex(randID)!= ""){
+                        cout << "found vertex " << graph->getVertex(randID) << endl;
+                    }else{
+                        cout << "not found " << endl;
                     }
                 }
                 break;

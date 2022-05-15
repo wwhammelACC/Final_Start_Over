@@ -32,28 +32,28 @@ public:
 
     int getVertexCount();
     int getEdgeCount();
-    string getVertex(int, int);
-    string getEdge(int, int);
+    string getVertex(int);
     bool getHeadID(int, Data*);
 
     bool addEdge(int, string*, int, string*, int);
     bool addVertex(int, string*);
     bool removeEdge(int, int);
-    bool removeVertex(int, int);
+    bool removeVertex(int);
 
     void printGraph(int);
 
 //    void DFS(int);
 //    void breadthFirstTraversal(int);
 
-//    bool clearGraph();
+    void clearGraph();
+    vector<LinkedList*> graphList;
 
 // private methods
 private:
     Node *head;
     int countEdge;
     int countVertex;
-    vector<LinkedList*> graphList;
+//    vector<LinkedList*> graphList;
 };
 
 #endif //GRAPH_H

@@ -72,31 +72,31 @@ bool Graph::removeEdge(int id1, int id2){
     bool flag = false;
     if (id1 >=0 && id2 >= 0) {
         for (int i = 0; i < graphList.size(); i++) {
-            if((graphList[i]->exists(id1)) && graphList[i]->exists(id2)){
-                if (graphList[i]->getHeadId() == id1) {
+            if ((graphList[i]->exists(id1)) && graphList[i]->exists(id2)) {
+                if (id1 == graphList[i]->getHeadId()) {
                     graphList[i]->deleteNode(id2);
                     flag = true;
-                    countEdge -=1;
-                } else if (graphList[i]->getHeadId() == id2) {
-                    graphList[i]->deleteNode(id1);
-                    flag = true;
-                    countEdge -=1;
+                    countEdge -= 1;
                 }
-            }
-            else{
-                flag = false;
             }
         }
     }
-    return flag;
+        return flag;
 }
 
-bool Graph::removeVertex(int listID, int indexID){
+bool Graph::removeVertex(int indexID){
     bool flag = false;
-    if (indexID >= 0 && listID >= 0){
-        if (graphList[listID]->deleteNode(indexID))
-            flag = true;
-        countVertex -=1;
+    if (indexID >=0) {
+        for (int i = 0; i < graphList.size(); i++) {
+            if ((graphList[i]->exists(indexID))) {
+                if (indexID == graphList[i]->getHeadId()) {
+                    graphList[i]->clearList();
+                    graphList.erase(graphList.begin() + i);
+                    countVertex -= 1;
+                    flag = true;
+                }
+            }
+        }
     }
     return flag;
 }
@@ -119,27 +119,29 @@ int Graph::getEdgeCount(){
     return countEdge;
 }
 
-string Graph::getVertex(int listID, int indexID){
+string Graph::getVertex(int indexID){
     //making temporary data holder for testing
     Data tmpData;
     string found = "";
-    if(indexID >= 0){
-        if (graphList[listID]->getNode(indexID, &tmpData)) {
-            found = tmpData.data;
+    if (indexID >=0) {
+        for (int i = 0; i < graphList.size(); i++) {
+            if ((graphList[i]->exists(indexID))) {
+                if (graphList[i]->getNode(indexID, &tmpData)) {
+                    found = tmpData.data;
+                }
+            }
         }
     }
     return found;
 }
 
-string Graph::getEdge(int listID, int indexID){
-    //making temporary data holder for testing
-    Data tmpData;
-    string found = "";
-    if(indexID >= 0){
-        if (graphList[listID]->getNode(indexID, &tmpData)) {
-            found = tmpData.data;
+void Graph::clearGraph(){
+    for(int i = 0; i < graphList.size(); i++){
+        if(graphList[i] != NULL){
+            graphList[i]->clearList();
+            countVertex = 0;
+            countEdge = 0;
         }
     }
-    return found;
+    graphList.clear();
 }
-
