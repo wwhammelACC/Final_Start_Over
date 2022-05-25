@@ -42,18 +42,13 @@ public:
 
     void printGraph(int);
 
-//    void DFS(int);
-//    void breadthFirstTraversal(int);
-
     void clearGraph();
-    vector<LinkedList*> graphList;
 
 // private methods
 private:
-    Node *head;
     int countEdge;
     int countVertex;
-//    vector<LinkedList*> graphList;
+    vector<LinkedList*> graphList;
 };
 
 #endif //GRAPH_H
